@@ -16,7 +16,7 @@ public class Player : MonoBehaviour
     private Transform groundCheck;
     private bool onGround;
     private bool isDead = false;
-    private bool facingRight = false;
+    private bool facingRight = true;
     private bool jump = false;
 
     // Start is called before the first frame update
