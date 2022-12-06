@@ -69,6 +69,7 @@ public class HeroKnight : MonoBehaviour {
 
         // -- Handle input and movement --
         float inputX = Input.GetAxis("Horizontal");
+        float inputY = Input.GetAxis("Vertical");
 
         // Swap direction of sprite depending on walk direction
         if (inputX > 0)
@@ -85,15 +86,15 @@ public class HeroKnight : MonoBehaviour {
 
         // Move
         if (!m_rolling )
-            m_body2d.velocity = new Vector2(inputX * m_speed, m_body2d.velocity.y);
+            m_body2d.velocity = new Vector2(inputX * m_speed, inputY * m_speed);
 
-        //Set AirSpeed in animator
-        m_animator.SetFloat("AirSpeedY", m_body2d.velocity.y);
+        // //Set AirSpeed in animator
+        // m_animator.SetFloat("AirSpeedY", m_body2d.velocity.y);
 
-        // -- Handle Animations --
-        //Wall Slide
-        m_isWallSliding = (m_wallSensorR1.State() && m_wallSensorR2.State()) || (m_wallSensorL1.State() && m_wallSensorL2.State());
-        m_animator.SetBool("WallSlide", m_isWallSliding);
+        // // -- Handle Animations --
+        // //Wall Slide
+        // m_isWallSliding = (m_wallSensorR1.State() && m_wallSensorR2.State()) || (m_wallSensorL1.State() && m_wallSensorL2.State());
+        // m_animator.SetBool("WallSlide", m_isWallSliding);
 
         //Death
         if (Input.GetKeyDown("e") && !m_rolling)
