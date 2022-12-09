@@ -3,11 +3,13 @@ using System.Collections;
 
 public class HeroKnight : MonoBehaviour {
 
-    [SerializeField] float      m_speed = 4.0f;
+    [SerializeField] float      m_speed = 5.0f;
     [SerializeField] float      m_jumpForce = 7.5f;
     [SerializeField] float      m_rollForce = 6.0f;
     [SerializeField] bool       m_noBlood = false;
     [SerializeField] GameObject m_slideDust;
+
+
 
     private Animator            m_animator;
     private Rigidbody2D         m_body2d;
@@ -27,9 +29,12 @@ public class HeroKnight : MonoBehaviour {
     private float               m_rollCurrentTime;
 
 
+
+
     // Use this for initialization
     void Start ()
     {
+
         m_animator = GetComponent<Animator>();
         m_body2d = GetComponent<Rigidbody2D>();
         m_groundSensor = transform.Find("GroundSensor").GetComponent<Sensor_HeroKnight>();
@@ -85,9 +90,11 @@ public class HeroKnight : MonoBehaviour {
         }
 
         // Move
-        if (!m_rolling )
-            m_body2d.velocity = new Vector2(inputX * m_speed, inputY * m_speed);
+        if (!m_rolling){
+            m_body2d.velocity = new Vector2(inputX * m_speed, inputY * m_speed); 
+        }
 
+        
         // //Set AirSpeed in animator
         // m_animator.SetFloat("AirSpeedY", m_body2d.velocity.y);
 
@@ -97,9 +104,10 @@ public class HeroKnight : MonoBehaviour {
         // m_animator.SetBool("WallSlide", m_isWallSliding);
 
         //Death
-        if (Input.GetKeyDown("e") && !m_rolling)
-        {
-            m_animator.SetBool("noBlood", m_noBlood);
+        
+        m_animator.SetBool("noBlood", m_noBlood);
+
+        if(m_noBlood){
             m_animator.SetTrigger("Death");
         }
             
@@ -157,7 +165,7 @@ public class HeroKnight : MonoBehaviour {
         }
 
         //Run
-        else if (Mathf.Abs(inputX) > Mathf.Epsilon)
+        else if (Mathf.Abs(inputX) > Mathf.Epsilon || Mathf.Abs(inputY) > Mathf.Epsilon)
         {
             // Reset timer
             m_delayToIdle = 0.05f;
@@ -173,6 +181,9 @@ public class HeroKnight : MonoBehaviour {
                     m_animator.SetInteger("AnimState", 0);
         }
     }
+
+    
+
 
     // Animation Events
     // Called in slide animation.
