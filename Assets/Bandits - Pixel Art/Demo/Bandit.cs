@@ -14,6 +14,8 @@ public class Bandit : MonoBehaviour {
     private Transform target;
     private bool facingRight;
 
+    [SerializeField] public int health = 3;
+
     // Use this for initialization
     void Start () {
         m_animator = GetComponent<Animator>();
@@ -35,6 +37,14 @@ public class Bandit : MonoBehaviour {
         }
 
         walkTimer += Time.deltaTime;
+
+        if(health<=0){
+            m_isDead = true;
+        }
+
+        if(m_isDead){
+             m_animator.SetTrigger("Death");
+        }
 
         // // -- Handle input and movement --
         // float inputX = Input.GetAxis("Horizontal");
@@ -107,7 +117,7 @@ public class Bandit : MonoBehaviour {
             m_body2d.velocity = new Vector2(hForce * m_speed, yForce * m_speed);
         }
 
-
+    
 
 }
 }

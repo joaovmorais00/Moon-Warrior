@@ -3,6 +3,8 @@ using System.Collections;
 
 public class Sensor_Bandit : MonoBehaviour {
 
+    public Bandit bandit;
+
     private int m_ColCount = 0;
 
     private float m_DisableTimer;
@@ -38,4 +40,6 @@ public class Sensor_Bandit : MonoBehaviour {
     {
         m_DisableTimer = duration;
     }
+
+    
 }

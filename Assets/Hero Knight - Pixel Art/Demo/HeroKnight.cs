@@ -8,10 +8,7 @@ public class HeroKnight : MonoBehaviour {
     [SerializeField] float      m_rollForce = 6.0f;
     [SerializeField] bool       m_noBlood = false;
     [SerializeField] GameObject m_slideDust;
-
-
-
-
+    // [SerializeField] GameObject m_playerAttack;
 
     private Animator            m_animator;
     private Rigidbody2D         m_body2d;
@@ -29,7 +26,7 @@ public class HeroKnight : MonoBehaviour {
     private float               m_delayToIdle = 0.0f;
     private float               m_rollDuration = 8.0f / 14.0f;
     private float               m_rollCurrentTime;
-
+    private Transform attackPlayer;
 
 
 
@@ -39,6 +36,7 @@ public class HeroKnight : MonoBehaviour {
 
         m_animator = GetComponent<Animator>();
         m_body2d = GetComponent<Rigidbody2D>();
+        attackPlayer = transform.Find("Attack").transform;
         m_groundSensor = transform.Find("GroundSensor").GetComponent<Sensor_HeroKnight>();
         m_wallSensorR1 = transform.Find("WallSensor_R1").GetComponent<Sensor_HeroKnight>();
         m_wallSensorR2 = transform.Find("WallSensor_R2").GetComponent<Sensor_HeroKnight>();
@@ -83,12 +81,18 @@ public class HeroKnight : MonoBehaviour {
         {
             GetComponent<SpriteRenderer>().flipX = false;
             m_facingDirection = 1;
+            Vector3 position = new Vector3(0.74f, attackPlayer.transform.localPosition.y, attackPlayer.transform.localPosition.z);
+            attackPlayer.transform.localPosition = position;
         }
             
         else if (inputX < 0)
         {
             GetComponent<SpriteRenderer>().flipX = true;
             m_facingDirection = -1;
+            // Debug.Log(attackPlayer.localPosition);
+            Vector3 position = new Vector3(-0.74f, attackPlayer.transform.localPosition.y, attackPlayer.transform.localPosition.z);
+            attackPlayer.transform.localPosition = position;
+           
         }
 
         // Move
@@ -206,4 +210,6 @@ public class HeroKnight : MonoBehaviour {
             dust.transform.localScale = new Vector3(m_facingDirection, 1, 1);
         }
     }
+
+    
 }
