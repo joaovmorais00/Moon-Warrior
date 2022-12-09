@@ -8,6 +8,8 @@ public class HeroKnight : MonoBehaviour {
     [SerializeField] float      m_rollForce = 6.0f;
     [SerializeField] bool       m_noBlood = false;
     [SerializeField] GameObject m_slideDust;
+    [SerializeField] float maxHeight, maxWidth, minHeight, minWidth;
+
 
     private Animator            m_animator;
     private Rigidbody2D         m_body2d;
