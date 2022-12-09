@@ -4,8 +4,6 @@ using System.Collections;
 public class Bandit : MonoBehaviour {
 
     [SerializeField] float  m_speed;
-    // [SerializeField] float      m_jumpForce = 7.5f;
-    [SerializeField] float maxHeight, maxWidth, minHeight, minWidth;
 
     private float yForce;
     private float walkTimer;
@@ -27,7 +25,7 @@ public class Bandit : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        facingRight = (target.position.x < transform.position.x) ? false : true;
+        facingRight = (target.position.x + 0.25  < transform.position.x) ? false : true;
         if (facingRight) {
             GetComponent<SpriteRenderer>().flipX = true;
             facingRight = false;
@@ -38,20 +36,20 @@ public class Bandit : MonoBehaviour {
 
         walkTimer += Time.deltaTime;
 
-        // -- Handle input and movement --
-        float inputX = Input.GetAxis("Horizontal");
+        // // -- Handle input and movement --
+        // float inputX = Input.GetAxis("Horizontal");
 
         // Swap direction of sprite depending on walk direction
-        if (inputX > 0)
-            transform.localScale = new Vector3(-3.8f, 3.8f, 3.8f);
-        else if (inputX < 0)
-            transform.localScale = new Vector3(3.8f, 3.8f, 3.8f);
+        // if (inputX > 0)
+        //     transform.localScale = new Vector3(-3.8f, 3.8f, 3.8f);
+        // else if (inputX < 0)
+        //     transform.localScale = new Vector3(3.8f, 3.8f, 3.8f);
 
-        // Move
-        m_body2d.velocity = new Vector2(inputX * m_speed, m_body2d.velocity.y);
+        // // Move
+        // m_body2d.velocity = new Vector2(inputX * m_speed, m_body2d.velocity.y);
 
-        //Set AirSpeed in animator
-        m_animator.SetFloat("AirSpeed", m_body2d.velocity.y);
+        // //Set AirSpeed in animator
+        // m_animator.SetFloat("AirSpeed", m_body2d.velocity.y);
 
         // -- Handle Animations --
         //Death
@@ -107,8 +105,6 @@ public class Bandit : MonoBehaviour {
             }
 
             m_body2d.velocity = new Vector2(hForce * m_speed, yForce * m_speed);
-
-            m_body2d.position = new Vector2(Mathf.Clamp(m_body2d.position.x, minWidth + 1, maxWidth - 1), Mathf.Clamp(m_body2d.position.x, minHeight + 1, maxHeight - 1));
         }
 
 
