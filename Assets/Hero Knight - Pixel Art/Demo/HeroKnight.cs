@@ -125,7 +125,6 @@ public class HeroKnight : MonoBehaviour {
 
             if(health<=0){
                 m_isDead = true;
-                timeDeath -= Time.deltaTime;
             }
 
             
@@ -200,14 +199,17 @@ public class HeroKnight : MonoBehaviour {
                         m_animator.SetInteger("AnimState", 0);
             }
         }else{
-            if(m_isDead && timeDeath>0 && !setDeath){
-            m_animator.SetTrigger("Death");
-            setDeath=true;
-        }
+            if(m_isDead && timeDeath>0 ){
+                timeDeath -= Time.deltaTime;
+                if(!setDeath){
+                    m_animator.SetTrigger("Death");
+                    setDeath=true;
+                }
+            }
 
-        if(timeDeath<=0){
-            gameObject.SetActive(false);
-        }
+            if(timeDeath<=0){
+                gameObject.SetActive(false);
+            }
         }
         
     }
