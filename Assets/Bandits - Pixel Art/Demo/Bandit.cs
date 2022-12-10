@@ -16,6 +16,8 @@ public class Bandit : MonoBehaviour {
     private Transform target;
     private bool facingRight;
 
+    private Transform attackBandit;
+
     [SerializeField] public int health = 3;
 
     private float nextAttack = 0;
@@ -28,6 +30,7 @@ public class Bandit : MonoBehaviour {
         m_body2d = GetComponent<Rigidbody2D>();
         target = FindObjectOfType<HeroKnight>().transform;
         m_animator.SetInteger("AnimState", 2);
+        attackBandit = transform.Find("AttackBandit").transform;
     }
 	
 	// Update is called once per frame
@@ -37,13 +40,18 @@ public class Bandit : MonoBehaviour {
         if (facingRight) {
             GetComponent<SpriteRenderer>().flipX = true;
             facingRight = false;
+            Vector3 position = new Vector3(1.0f, attackBandit.transform.localPosition.y, attackBandit.transform.localPosition.z);
+            attackBandit.transform.localPosition = position;
         } else {
             GetComponent<SpriteRenderer>().flipX = false;
             facingRight = true;
+            Vector3 position = new Vector3(0.0f, attackBandit.transform.localPosition.y, attackBandit.transform.localPosition.z);
+            attackBandit.transform.localPosition = position;
         }
 
         walkTimer += Time.deltaTime;
         damageTime -= Time.deltaTime;
+
 
         if(health<=0){
             m_isDead = true;

@@ -8,6 +8,7 @@ public class HeroKnight : MonoBehaviour {
     [SerializeField] float      m_rollForce = 6.0f;
     [SerializeField] bool       m_noBlood = false;
     [SerializeField] GameObject m_slideDust;
+    [SerializeField] public int health = 3;
     // [SerializeField] GameObject m_playerAttack;
 
     private Animator            m_animator;
@@ -20,6 +21,7 @@ public class HeroKnight : MonoBehaviour {
     private bool                m_isWallSliding = false;
     private bool                m_grounded = false;
     private bool                m_rolling = false;
+    private bool                m_isDead = false;
     private int                 m_facingDirection = 1;
     private int                 m_currentAttack = 0;
     private float               m_timeSinceAttack = 0.0f;
@@ -27,6 +29,9 @@ public class HeroKnight : MonoBehaviour {
     private float               m_rollDuration = 8.0f / 14.0f;
     private float               m_rollCurrentTime;
     private Transform attackPlayer;
+
+    private float damageTime = 1;
+    private float timeDeath = 1;
 
 
 
@@ -47,6 +52,8 @@ public class HeroKnight : MonoBehaviour {
     // Update is called once per frame
     void Update ()
     {
+        damageTime -= Time.deltaTime;
+
         // Increase timer that controls attack combo
         m_timeSinceAttack += Time.deltaTime;
 
@@ -113,13 +120,22 @@ public class HeroKnight : MonoBehaviour {
         
         m_animator.SetBool("noBlood", m_noBlood);
 
-        if(m_noBlood){
+        if(health<=0){
+            m_isDead = true;
+            timeDeath -= Time.deltaTime;
+        }
+
+        if(m_isDead && timeDeath>0){
             m_animator.SetTrigger("Death");
+        }
+
+        if(timeDeath<=0){
+            gameObject.SetActive(false);
         }
             
         //Hurt
-        else if (Input.GetKeyDown("q") && !m_rolling)
-            m_animator.SetTrigger("Hurt");
+        // else if (Input.GetKeyDown("q") && !m_rolling)
+        //     m_animator.SetTrigger("Hurt");
 
         //Attack
         else if(Input.GetMouseButtonDown(0) && m_timeSinceAttack > 0.25f && !m_rolling)
@@ -142,33 +158,33 @@ public class HeroKnight : MonoBehaviour {
         }
 
         // Block
-        else if (Input.GetMouseButtonDown(1) && !m_rolling)
-        {
-            m_animator.SetTrigger("Block");
-            m_animator.SetBool("IdleBlock", true);
-        }
+        // else if (Input.GetMouseButtonDown(1) && !m_rolling)
+        // {
+        //     m_animator.SetTrigger("Block");
+        //     m_animator.SetBool("IdleBlock", true);
+        // }
 
-        else if (Input.GetMouseButtonUp(1))
-            m_animator.SetBool("IdleBlock", false);
+        // else if (Input.GetMouseButtonUp(1))
+        //     m_animator.SetBool("IdleBlock", false);
 
         // Roll
-        else if (Input.GetKeyDown("left shift") && !m_rolling && !m_isWallSliding)
-        {
-            m_rolling = true;
-            m_animator.SetTrigger("Roll");
-            m_body2d.velocity = new Vector2(m_facingDirection * m_rollForce, m_body2d.velocity.y);
-        }
+        // else if (Input.GetKeyDown("left shift") && !m_rolling && !m_isWallSliding)
+        // {
+        //     m_rolling = true;
+        //     m_animator.SetTrigger("Roll");
+        //     m_body2d.velocity = new Vector2(m_facingDirection * m_rollForce, m_body2d.velocity.y);
+        // }
             
 
         //Jump
-        else if (Input.GetKeyDown("space") && m_grounded && !m_rolling)
-        {
-            m_animator.SetTrigger("Jump");
-            m_grounded = false;
-            m_animator.SetBool("Grounded", m_grounded);
-            m_body2d.velocity = new Vector2(m_body2d.velocity.x, m_jumpForce);
-            m_groundSensor.Disable(0.2f);
-        }
+        // else if (Input.GetKeyDown("space") && m_grounded && !m_rolling)
+        // {
+        //     m_animator.SetTrigger("Jump");
+        //     m_grounded = false;
+        //     m_animator.SetBool("Grounded", m_grounded);
+        //     m_body2d.velocity = new Vector2(m_body2d.velocity.x, m_jumpForce);
+        //     m_groundSensor.Disable(0.2f);
+        // }
 
         //Run
         else if (Mathf.Abs(inputX) > Mathf.Epsilon || Mathf.Abs(inputY) > Mathf.Epsilon)
@@ -208,6 +224,14 @@ public class HeroKnight : MonoBehaviour {
             GameObject dust = Instantiate(m_slideDust, spawnPosition, gameObject.transform.localRotation) as GameObject;
             // Turn arrow in correct direction
             dust.transform.localScale = new Vector3(m_facingDirection, 1, 1);
+        }
+    }
+
+    public void takeDamage(){
+        if(damageTime<=0 && health>=0){
+            health--;
+            m_animator.SetTrigger("Hurt");
+            damageTime = 2;
         }
     }
 
