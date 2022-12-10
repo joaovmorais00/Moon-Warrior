@@ -138,7 +138,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1689866831511430, guid: 2e2183501755a214591e802f3aff33d2, type: 3}
       propertyPath: m_Name
-      value: LightBandit
+      value: Inimigo1
       objectReference: {fileID: 0}
     - target: {fileID: 4805181885227780, guid: 2e2183501755a214591e802f3aff33d2, type: 3}
       propertyPath: m_RootOrder
@@ -202,7 +202,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 114850797635947820, guid: 2e2183501755a214591e802f3aff33d2, type: 3}
       propertyPath: m_speed
-      value: 1.5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 114850797635947820, guid: 2e2183501755a214591e802f3aff33d2, type: 3}
       propertyPath: maxWidth

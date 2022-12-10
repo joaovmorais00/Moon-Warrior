@@ -30,7 +30,7 @@ public class Vampire : MonoBehaviour {
     //Variavel pra setar animação da morte do player somente uma vez
     private bool setDeath = false;
 
-    private bool facingRight;
+    [SerializeField] public bool facingRight= false;
     private float yForce;
     private float walkTimer;
 
