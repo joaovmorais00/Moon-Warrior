@@ -21,8 +21,8 @@ public class Bandit : MonoBehaviour {
     [SerializeField] public int health = 3;
 
     private float nextAttack = 0;
-    private float timeDeath = 1.5;
-    private float damageTime = 1;
+    private float timeDeath = 1.5f;
+    private float damageTime = 1f;
 
     // Use this for initialization
     void Start () {
