@@ -5,7 +5,7 @@ public class Bandit : MonoBehaviour {
 
     [SerializeField] float  m_speed;
 
-    private float attackRate = 1f;
+    
 
     private float yForce;
     private float walkTimer;
@@ -20,16 +20,17 @@ public class Bandit : MonoBehaviour {
 
     [SerializeField] public int health = 3;
 
+    private float attackRate = 1f;
     private float nextAttack = 0;
     private float timeDeath = 1.5f;
-    private float damageTime = 1f;
+    private float damageTime = 0.5f;
 
     // Use this for initialization
     void Start () {
         m_animator = GetComponent<Animator>();
         m_body2d = GetComponent<Rigidbody2D>();
         target = FindObjectOfType<HeroKnight>().transform;
-        m_animator.SetInteger("AnimState", 2);
+        
         attackBandit = transform.Find("AttackBandit").transform;
     }
 	
@@ -140,6 +141,10 @@ public class Bandit : MonoBehaviour {
                 hForce = 0;
             }
 
+            if(hForce !=0 || yForce !=0){
+                m_animator.SetInteger("AnimState", 2);
+            }
+
             m_body2d.velocity = new Vector2(hForce * m_speed, yForce * m_speed);
         }
     }
@@ -148,7 +153,7 @@ public class Bandit : MonoBehaviour {
         if(damageTime<=0){
             health--;
             m_animator.SetTrigger("Hurt");
-            damageTime = 2;
+            damageTime = 0.5f;
         }
     }
 

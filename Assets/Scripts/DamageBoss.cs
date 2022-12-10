@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DamagePlayer : MonoBehaviour
+public class DamageBoss : MonoBehaviour
 {
-    private HeroKnight player;
+    private Vampire boss;
 
     // Start is called before the first frame update
     void Start()
     {
-        player = gameObject.transform.parent.GetComponent<HeroKnight>();
+        boss = gameObject.transform.parent.GetComponent<Vampire>();
     }
 
     // Update is called once per frame
@@ -20,8 +20,8 @@ public class DamagePlayer : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        if(col.gameObject.name == "AttackBandit" || col.gameObject.name == "AttackBoss") {
-            player.takeDamage();
+        if(col.gameObject.name == "Attack") {
+            boss.takeDamage();
             // Debug.Log("dano");
         }
     }
