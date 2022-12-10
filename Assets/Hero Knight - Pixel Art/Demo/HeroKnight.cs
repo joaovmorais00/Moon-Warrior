@@ -30,7 +30,7 @@ public class HeroKnight : MonoBehaviour {
     private float               m_rollCurrentTime;
     private Transform attackPlayer;
 
-    private float damageTime = 1;
+    private float damageTime = 0.5f;
     private float timeDeath = 3;
     //Variavel pra setar animação da morte do player somente uma vez
     private bool setDeath = false;
