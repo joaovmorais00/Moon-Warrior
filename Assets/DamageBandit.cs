@@ -20,7 +20,7 @@ public class DamageBandit : MonoBehaviour
     void OnTriggerEnter2D(Collider2D col)
     {
         if(col.gameObject.name == "Attack") {
-            bandit.health--;
+            bandit.takeDamage();
             Debug.Log("dano");}
         
         

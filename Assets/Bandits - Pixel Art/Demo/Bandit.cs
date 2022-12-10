@@ -5,6 +5,8 @@ public class Bandit : MonoBehaviour {
 
     [SerializeField] float  m_speed;
 
+    private float attackRate = 1f;
+
     private float yForce;
     private float walkTimer;
     private Animator            m_animator;
@@ -15,6 +17,10 @@ public class Bandit : MonoBehaviour {
     private bool facingRight;
 
     [SerializeField] public int health = 3;
+
+    private float nextAttack = 0;
+    private float timeDeath = 3;
+    private float damageTime = 1;
 
     // Use this for initialization
     void Start () {
@@ -37,13 +43,19 @@ public class Bandit : MonoBehaviour {
         }
 
         walkTimer += Time.deltaTime;
+        damageTime -= Time.deltaTime;
 
         if(health<=0){
             m_isDead = true;
         }
 
         if(m_isDead){
-             m_animator.SetTrigger("Death");
+            m_animator.SetTrigger("Death");
+            timeDeath -= Time.deltaTime;
+        }
+
+        if(timeDeath<=0){
+            gameObject.SetActive(false);
         }
 
         // // -- Handle input and movement --
@@ -104,7 +116,13 @@ public class Bandit : MonoBehaviour {
         if(!m_isDead){
             Vector2 targetDistance = target.position - transform.position;
             float hForce = targetDistance.x / Mathf.Abs(targetDistance.x);
+           
 
+            if(Mathf.Abs(targetDistance.x) < 2f && Mathf.Abs(targetDistance.y) <3f && Time.time> nextAttack) {
+                
+                m_animator.SetTrigger("Attack");
+                nextAttack = Time.time + attackRate;
+            }
             if(walkTimer >= Random.Range(1f, 2f)){
                 yForce = Random.Range(-1, 2);
                 walkTimer = 0;
@@ -116,8 +134,15 @@ public class Bandit : MonoBehaviour {
 
             m_body2d.velocity = new Vector2(hForce * m_speed, yForce * m_speed);
         }
+    }
+
+    public void takeDamage(){
+        if(damageTime<=0){
+            health--;
+            m_animator.SetTrigger("Hurt");
+            damageTime = 2;
+        }
+    }
 
     
-
-}
 }
