@@ -19,6 +19,10 @@ public class LevelLoaderScript : MonoBehaviour
         StartCoroutine(LoadLevel(SceneManager.GetActiveScene().buildIndex + 1));
     }
 
+    public void LoadMenu(){
+        StartCoroutine(LoadLevel(0));
+    }
+
     IEnumerator LoadLevel(int levelIndex){
         transition.SetTrigger("startCrossfade");
         yield return new WaitForSeconds(0.5f);
