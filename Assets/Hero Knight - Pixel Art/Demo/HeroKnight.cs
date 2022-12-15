@@ -11,6 +11,8 @@ public class HeroKnight : MonoBehaviour {
     [SerializeField] public int health = 3;
     // [SerializeField] GameObject m_playerAttack;
 
+    [SerializeField] public LevelLoaderScript loadLevel;
+
     private Animator            m_animator;
     private Rigidbody2D         m_body2d;
     private Sensor_HeroKnight   m_groundSensor;
@@ -208,6 +210,7 @@ public class HeroKnight : MonoBehaviour {
             }
 
             if(timeDeath<=0){
+                loadLevel.LoadMenu();
                 gameObject.SetActive(false);
             }
         }
