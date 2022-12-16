@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class Vampire : MonoBehaviour {
 
@@ -158,6 +159,7 @@ public class Vampire : MonoBehaviour {
 
                 if(timeDeath<=0){
                     gameObject.SetActive(false);
+                    SceneManager.LoadScene(3);
                 }
 
                
@@ -202,4 +204,6 @@ public class Vampire : MonoBehaviour {
             damageTime = 2;
         }
     }
+
+ 
 }

@@ -11,7 +11,7 @@ public class Intro : MonoBehaviour
     void Start()
     {
         
-        Invoke("WaitToEnd", 60);
+        Invoke("WaitToEnd", 35);
     }
 
     // Update is called once per frame

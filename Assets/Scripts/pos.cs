@@ -10,7 +10,7 @@ public class pos : MonoBehaviour
     void Start()
     {
         
-        Invoke("WaitToEnd", 40);
+        Invoke("WaitToEnd", 25);
     }
 
     // Update is called once per frame
